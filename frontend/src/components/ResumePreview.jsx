@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { API_BASE } from "src/config"
 
 export default function ResumePreview() {
   const [data, setData] = useState(null);
   const [err, setErr] = useState("");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/resume")
+    fetch(`${API_BASE}/api/resume`)
       .then(r => r.json())
       .then(setData)
       .catch(e => {
