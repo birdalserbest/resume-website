@@ -2,9 +2,17 @@ import {useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Chat from "src/components/Chat"
 import ResumePreview from "./components/ResumePreview"
 import BackendMessage from "./components/BasicBackendMessage"
 
+function ChatApp() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <Chat />
+    </div>
+  )
+}
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,6 +41,7 @@ function App() {
       <h1 className="text-4xl font-bold text-white">Vite + React</h1>
 
       {/* Backend test message */}
+      <ChatApp />
       <BackendMessage />
       <ResumePreview />
 
