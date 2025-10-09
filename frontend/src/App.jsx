@@ -1,26 +1,10 @@
-import { useEffect, useState } from 'react'
-import { API_BASE } from "./config"
+import {useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import ResumePreview from "./components/ResumePreview"
+import BackendMessage from "./components/BasicBackendMessage"
 
-function BackendMessage() {
-  const [msg, setMsg] = useState('Loading...')
-
-  useEffect(() => {
-    fetch(`${API_BASE}`)
-      .then(r => r.json())
-      .then(d => setMsg(d.message))
-      .catch(() => setMsg('Failed to reach backend'))
-  }, [])
-
-  return (
-    <h1 className="text-3xl font-bold mt-6 text-center text-blue-400">
-      {msg}
-    </h1>
-  )
-}
 
 function App() {
   const [count, setCount] = useState(0)
