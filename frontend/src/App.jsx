@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
+import { API_BASE } from "./config"
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import ResumePreview from "./components/ResumePreview";
+import ResumePreview from "./components/ResumePreview"
 
 function BackendMessage() {
   const [msg, setMsg] = useState('Loading...')
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/')
+    fetch(`${API_BASE}`)
       .then(r => r.json())
       .then(d => setMsg(d.message))
       .catch(() => setMsg('Failed to reach backend'))
