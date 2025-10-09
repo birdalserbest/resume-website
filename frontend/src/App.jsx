@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import ResumePreview from "./components/ResumePreview";
 
 function BackendMessage() {
   const [msg, setMsg] = useState('Loading...')
@@ -48,6 +49,7 @@ function App() {
 
       {/* Backend test message */}
       <BackendMessage />
+      <ResumePreview />
 
       {/* Counter card */}
       <div className="card bg-neutral-800 p-6 rounded-xl shadow-md space-y-3">

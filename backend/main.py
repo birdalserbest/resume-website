@@ -12,6 +12,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/api/health")
+def health():
+    return {"ok": True}
+
+
+@app.get("/api/resume")
+def resume():
+    # temporary stub; we’ll swap this with your real data later
+    return {
+        "name": "Your Name",
+        "title": "Software Engineer",
+        "skills": ["Python", "FastAPI", "React", "PostgreSQL"],
+        "projects": [
+            {"name": "Project A", "desc": "What it does…", "link": "#"},
+            {"name": "Project B", "desc": "What it does…", "link": "#"},
+        ],
+    }
+
+
 @app.get("/")
 def root():
     return {"message": "Backend is running!"}
