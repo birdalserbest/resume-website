@@ -1,0 +1,18 @@
+# Core framework
+react
+react-dom
+
+# Build tool
+vite
+
+# Styling
+tailwindcss
+postcss
+autoprefixer
+
+# Linting / formatting (if you’re using them)
+eslint
+eslint-plugin-react
+
+# Optional: motion / UI polish (for later)
+framer-motion

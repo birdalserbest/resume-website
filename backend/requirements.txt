@@ -1,4 +1,18 @@
+# Core framework
 fastapi
 uvicorn[standard]
-python-multipart
+
+# Environment + configuration
+python-dotenv
 pydantic
+python-multipart
+
+# LLM providers
+openai
+groq
+
+# Data handling / future RAG work
+sentence-transformers
+
+# Optional utilities (safe to keep)
+requests
