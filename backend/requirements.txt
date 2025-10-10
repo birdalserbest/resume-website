@@ -11,8 +11,12 @@ python-multipart
 openai
 groq
 
-# Data handling / future RAG work
-sentence-transformers
+# Data handling / RAG
+sentence-transformers==2.2.2
+transformers==4.35.2
+tokenizers<0.15
+urllib3==1.26.19
+pymupdf
 
-# Optional utilities (safe to keep)
+# Utilities
 requests

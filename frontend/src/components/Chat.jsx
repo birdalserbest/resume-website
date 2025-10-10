@@ -109,7 +109,7 @@ export default function Chat() {
               hyphens-auto break-normal whitespace-pre-wrap
               ${
                 m.role === "user"
-                  ? "bg-blue-600 text-white"
+                  ? "bg-blue-600 text-white text-left"
                   : "bg-neutral-800 text-neutral-100"
               }`}
             >

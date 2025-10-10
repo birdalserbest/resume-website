@@ -4,6 +4,7 @@
 # Python
 venv/
 .env
+!.env.example
 __pycache__/
 *.pyc
 *.pyo
@@ -30,3 +31,8 @@ yarn-error.log*
 # Editors
 .vscode/
 .idea/
+
+# Ignore personal resume data
+backend/data/resume.pdf
+backend/data/resume.raw.txt
+backend/data/resume.clean.txt
