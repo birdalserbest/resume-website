@@ -9,6 +9,8 @@ from settings import (
     FRONTEND_ORIGIN,
     OPENAI_API_KEY,
     GROQ_API_KEY,
+    RESUME_TEXT,
+    OPENAI_MODEL,
 )
 from providers.mock_provider import MockProvider
 from providers.openai_provider import OpenAIProvider
@@ -29,8 +31,14 @@ app.add_middleware(
 # Select provider
 if PROVIDER == "openai" and OPENAI_API_KEY:
     chat_provider = OpenAIProvider()
+    print(
+        f"[boot] provider={PROVIDER} openai={bool(OPENAI_API_KEY)} groq={bool(GROQ_API_KEY)}"
+    )
 elif PROVIDER == "groq" and GROQ_API_KEY:
     chat_provider = GroqProvider()
+    print(
+        f"[boot] provider={PROVIDER} openai={bool(OPENAI_API_KEY)} groq={bool(GROQ_API_KEY)}"
+    )
 else:
     print("No valid API key found — using MockProvider for now.")
     chat_provider = MockProvider()
@@ -47,6 +55,11 @@ class ChatRequest(BaseModel):
 
 
 RAG_PATH = Path("data/resume.clean.txt")
+
+if RESUME_TEXT:
+    RAG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    RAG_PATH.write_text(RESUME_TEXT, encoding="utf-8")
+
 rag = None
 if RAG_PATH.exists():
     try:
@@ -100,6 +113,16 @@ def resume():
 @app.get("/")
 def root():
     return {"message": "Backend is running!"}
+
+
+@app.get("/api/debug/config")
+def debug_config():
+    return {
+        "provider": PROVIDER,
+        "has_openai_key": bool(OPENAI_API_KEY),
+        "has_groq_key": bool(GROQ_API_KEY),
+        "openai_model": OPENAI_MODEL,
+    }
 
 
 @app.get("/api/rag/reload")
