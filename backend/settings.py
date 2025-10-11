@@ -23,3 +23,5 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
 
 # Allowed frontend origin during local dev (Vite)
 FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
+
+RESUME_TEXT = os.getenv("RESUME_TEXT", "")
