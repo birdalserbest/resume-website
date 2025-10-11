@@ -9,7 +9,6 @@ from settings import (
     FRONTEND_ORIGIN,
     OPENAI_API_KEY,
     GROQ_API_KEY,
-    RESUME_TEXT,
     OPENAI_MODEL,
 )
 from providers.mock_provider import MockProvider
@@ -54,22 +53,19 @@ class ChatRequest(BaseModel):
     messages: List[Msg]  # we expect a short window of the recent chat
 
 
-RAG_PATH = Path("data/resume.clean.txt")
-
-if RESUME_TEXT:
-    RAG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    RAG_PATH.write_text(RESUME_TEXT, encoding="utf-8")
+# --- RAG: load prebuilt JSON index (no ML downloads in prod) ---
+RAG_JSON = Path("data/rag_index.json")
 
 rag = None
-if RAG_PATH.exists():
+if RAG_JSON.exists():
     try:
-        rag = ResumeRAG(RAG_PATH)
+        rag = ResumeRAG(RAG_JSON)  # this class should read JSON, not load a model
         n = rag.build()
-        print(f"RAG index ready with {n} chunks from {RAG_PATH}")
+        print(f"RAG index ready with {n} chunks from {RAG_JSON}")
     except Exception as e:
         print(f"RAG init failed: {e}")
 else:
-    print(f"No {RAG_PATH}; RAG disabled")
+    print(f"No {RAG_JSON}; RAG disabled")
 
 
 @app.post("/api/chat")
@@ -127,13 +123,13 @@ def debug_config():
 
 @app.get("/api/rag/reload")
 def rag_reload():
-    """Rebuild index after updating resume.clean.txt."""
+    """Re-read the prebuilt JSON index from disk."""
     global rag
-    if not RAG_PATH.exists():
-        return {"ok": False, "error": f"Missing {RAG_PATH}"}
+    if not RAG_JSON.exists():
+        return {"ok": False, "error": f"Missing {RAG_JSON}"}
     try:
         if rag is None:
-            rag = ResumeRAG(RAG_PATH)
+            rag = ResumeRAG(RAG_JSON)
         n = rag.build()
         return {"ok": True, "chunks": n}
     except Exception as e:
