@@ -1,68 +1,27 @@
-import {useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Chat from "src/components/Chat"
-import ResumePreview from "./components/ResumePreview"
-import BackendMessage from "./components/BasicBackendMessage"
+import "./App.css";
+import Chat from "src/components/Chat";
+import GlassCard from "./components/GlassCard";
+import HeroBackground from "./components/HeroBackground";
 
 function ChatApp() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <Chat />
+    <div className="px-4 w-full">
+      <div className="mx-auto w-full max-w-3xl">
+        <GlassCard className="mx-auto w-full">
+          <Chat />
+        </GlassCard>
+      </div>
     </div>
-  )
+  );
 }
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center space-y-4">
-      {/* Logo section */}
-      <div className="flex justify-center space-x-4 mt-6">
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img
-            src={viteLogo}
-            className="logo w-24 hover:scale-110 transition-transform"
-            alt="Vite logo"
-          />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img
-            src={reactLogo}
-            className="logo react w-24 hover:scale-110 transition-transform"
-            alt="React logo"
-          />
-        </a>
-      </div>
-
-      {/* Title */}
-      <h1 className="text-4xl font-bold text-white">Vite + React</h1>
-
-      {/* Backend test message */}
+      <HeroBackground />
       <ChatApp />
-      <BackendMessage />
-      <ResumePreview />
-
-      {/* Counter card */}
-      <div className="card bg-neutral-800 p-6 rounded-xl shadow-md space-y-3">
-        <button
-          onClick={() => setCount(count + 1)}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md transition-colors"
-        >
-          count is {count}
-        </button>
-        <p className="text-gray-300">
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-
-      <p className="read-the-docs text-sm text-gray-400">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

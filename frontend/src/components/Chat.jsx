@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from "react";
-import { API_BASE } from "src/config"; // single source for backend URL
+import { useState, useRef, useEffect } from "react"
+import { API_BASE } from "src/config" // single source for backend URL
 
 export default function Chat() {
   // Local state for messages in the conversation.
@@ -9,35 +9,35 @@ export default function Chat() {
       role: "assistant",
       content: "Hi! Ask me about Birdal’s experience or projects.",
     },
-  ];
-  const [messages, setMessages] = useState(INITIAL_MESSAGES);
+  ]
+  const [messages, setMessages] = useState(INITIAL_MESSAGES)
 
   // State for the text in the input box
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState("")
   // Loading flag to disable input and show "Thinking…" bubble
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   // Reference to the scrollable chat container so we can auto-scroll on new messages
-  const listRef = useRef(null);
+  const listRef = useRef(null)
 
   // Auto-scroll whenever messages update
   useEffect(() => {
     listRef.current?.scrollTo({
       top: listRef.current.scrollHeight,
       behavior: "smooth",
-    });
-  }, [messages]);
+    })
+  }, [messages])
 
   // Called when the user presses “Send” or hits Enter
   async function send() {
-    const text = input.trim();
-    if (!text || loading) return; // skip empty sends or double clicks
+    const text = input.trim()
+    if (!text || loading) return // skip empty sends or double clicks
 
     // Append the user’s message immediately to the chat
-    setInput("");
-    const next = [...messages, { role: "user", content: text }];
-    setMessages(next);
-    setLoading(true);
+    setInput("")
+    const next = [...messages, { role: "user", content: text }]
+    setMessages(next)
+    setLoading(true)
 
     try {
       // Send all recent messages to backend; we keep only last 8 to limit payload size
@@ -45,38 +45,32 @@ export default function Chat() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: next.slice(-8) }),
-      });
+      })
 
       // Parse backend response
-      const data = await res.json();
+      const data = await res.json()
       // Append assistant’s reply
-      setMessages((m) => [
-        ...m,
-        { role: "assistant", content: data.reply ?? "…" },
-      ]);
+      setMessages((m) => [...m, { role: "assistant", content: data.reply ?? "…" }])
     } catch {
       // If backend can’t be reached, show fallback message
-      setMessages((m) => [
-        ...m,
-        { role: "assistant", content: "Sorry — backend not reachable." },
-      ]);
+      setMessages((m) => [...m, { role: "assistant", content: "Sorry — backend not reachable." }])
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
   // Handle keyboard input: Enter = send; Shift+Enter = newline
   function onKey(e) {
     if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      send();
+      e.preventDefault()
+      send()
     }
   }
 
   function clearChat() {
-    if (loading) return; // don't clear mid-request
-    setMessages(INITIAL_MESSAGES); // reset to greeting
-    listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    if (loading) return // don't clear mid-request
+    setMessages(INITIAL_MESSAGES) // reset to greeting
+    listRef.current?.scrollTo({ top: 0, behavior: "smooth" })
   }
 
   // Render UI
@@ -85,9 +79,7 @@ export default function Chat() {
       {/* ---------- Header ---------- */}
       <header className="text-center mb-6">
         <h1 className="text-3xl font-bold">Chat with Birdal’s Resume</h1>
-        <p className="opacity-75 text-sm mt-1">
-          Try: “Summarize your backend experience.”
-        </p>
+        <p className="opacity-75 text-sm mt-1">Try: “Summarize your backend experience.”</p>
       </header>
 
       {/* ---------- Scrollable message list ---------- */}
@@ -98,10 +90,7 @@ export default function Chat() {
                  p-4 overflow-auto space-y-3 w-full"
       >
         {messages.map((m, i) => (
-          <div
-            key={i}
-            className={m.role === "user" ? "text-right" : "text-left"}
-          >
+          <div key={i} className={m.role === "user" ? "text-right" : "text-left"}>
             {/* Each chat bubble */}
             <div
               className={`inline-block px-3 py-2 rounded-xl
@@ -163,8 +152,8 @@ export default function Chat() {
 
       {/* ---------- Footer hint ---------- */}
       <div className="mt-2 text-xs opacity-60 text-center">
-        Powered by a private model adapter (OpenAI/Groq) — demo mode.
+        Powered by a private model adapter (OpenAI/Groq)
       </div>
     </div>
-  );
+  )
 }
