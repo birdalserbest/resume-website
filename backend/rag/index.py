@@ -1,7 +1,7 @@
 # Lightweight RAG loader: in prod we just load JSON with precomputed vectors.
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 import json
 import numpy as np
 
@@ -56,7 +56,7 @@ def _make_vocab(texts: List[str]):
     return vocab
 
 
-def _bow_vec(text: str, corpus: List[str] | None, vocab=None):
+def _bow_vec(text: str, corpus: Optional[List[str]], vocab=None):
     global _GLOBAL_VOCAB
     if vocab is None:
         if not _GLOBAL_VOCAB:
