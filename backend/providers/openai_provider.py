@@ -1,6 +1,7 @@
 # OpenAI implementation using the official SDK.
 from typing import List, Dict
 from openai import OpenAI
+from typing import Iterable
 from .base import ChatProvider
 from settings import OPENAI_API_KEY, OPENAI_MODEL
 
@@ -19,7 +20,7 @@ class OpenAIProvider(ChatProvider):
             "role": "system",
             "content": (
                 "You are a helpful assistant that answers ONLY about the candidate's "
-                "resume and projects. Be concise and specific."
+                "resume and projects. Be concise and specific. Please sound conversational instead of info dumping. Use he/him pronounce for Birdal."
                 + (f"\nContext:\n{context}" if context else "")
             ),
         }
@@ -30,3 +31,25 @@ class OpenAIProvider(ChatProvider):
             temperature=0.3,
         )
         return (resp.choices[0].message.content or "").strip()
+
+    def stream(self, messages: list[dict], context: str = "") -> Iterable[str]:
+        # system msg stays the same
+        sys = {
+            "role": "system",
+            "content": (
+                "You are a helpful assistant that answers ONLY about the candidate's "
+                "resume and projects. Be concise and specific. Please sound conversational instead of info dumping. Use he/him pronounce for Birdal."
+                + (f"\nContext:\n{context}" if context else "")
+            ),
+        }
+        resp = self.client.chat.completions.create(
+            model=self.model,
+            messages=[sys] + messages,
+            temperature=0.3,
+            stream=True,  # ← stream tokens
+        )
+        for ev in resp:
+            # delta.content is the incremental text
+            piece = ev.choices[0].delta.content or ""
+            if piece:
+                yield piece

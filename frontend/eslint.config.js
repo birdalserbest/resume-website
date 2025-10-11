@@ -1,29 +1,33 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import js from "@eslint/js"
+import react from "eslint-plugin-react"
+import importPlugin from "eslint-plugin-import"
+import globals from "globals"            // 👈 add this
 
-export default defineConfig([
-  globalIgnores(['dist']),
+export default [
+  js.configs.recommended,
   {
-    files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
-    ],
+    files: ["**/*.{js,jsx}"],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
+      ecmaVersion: 2022,
+      sourceType: "module",
+      parserOptions: { ecmaFeatures: { jsx: true } },
+      globals: {
+        ...globals.browser,              // 👈 tells ESLint about fetch, window, etc.
       },
     },
+    plugins: { react, import: importPlugin },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      "import/no-unresolved": "error",
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+      "react/jsx-uses-vars": "error",
+    },
+    settings: {
+      react: { version: "detect" },
+      "import/resolver": {
+        alias: { map: [["src", "./src"]], extensions: [".js", ".jsx", ".json"] },
+        node: { extensions: [".js", ".jsx", ".json"] },
+      },
     },
   },
-])
+]

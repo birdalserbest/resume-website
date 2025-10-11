@@ -36,3 +36,6 @@ yarn-error.log*
 backend/data/resume.pdf
 backend/data/resume.raw.txt
 backend/data/resume.clean.txt
+
+# Ignore local IDE / config / artifacts
+frontend/.prettierrc
