@@ -152,7 +152,7 @@ export default function Chat() {
 
       {/* ---------- Footer hint ---------- */}
       <div className="mt-2 text-xs opacity-60 text-center">
-        Powered by a private model adapter (OpenAI/Groq)
+        Powered by a private model adapter (OpenAI)
       </div>
     </div>
   )
