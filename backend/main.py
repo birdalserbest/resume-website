@@ -77,7 +77,7 @@ def chat(req: ChatRequest):
     last_user = next((m["content"] for m in reversed(msgs) if m["role"] == "user"), "")
     context = ""
     if rag and last_user:
-        top = rag.search(last_user, k=3)
+        top = rag.search(last_user, k=5)
         if top:
             context = "Relevant resume snippets:\n" + "\n".join(
                 f"- {t}" for t, _ in top
