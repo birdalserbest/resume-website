@@ -9,7 +9,7 @@
     line-height: 1.5;
     font-weight: 400;
 
-    color-scheme: light dark;
+    color-scheme: dark;
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
 
@@ -39,16 +39,6 @@
   h1 {
     font-size: 3.2em;
     line-height: 1.1;
-  }
-
-  @media (prefers-color-scheme: light) {
-    :root {
-      color: #213547;
-      background-color: #ffffff;
-    }
-    a:hover {
-      color: #747bff;
-    }
   }
 }
 
@@ -81,10 +71,20 @@
 }
 
 @keyframes gradient-pan {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-.animate-gradient-pan { animation: gradient-pan 18s ease-in-out infinite; }
-.bg-200 { background-size: 200% 200%; }
+.animate-gradient-pan {
+  animation: gradient-pan 18s ease-in-out infinite;
+}
+.bg-200 {
+  background-size: 200% 200%;
+}

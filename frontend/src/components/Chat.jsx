@@ -121,7 +121,7 @@ export default function Chat() {
       <div className="mt-3 flex gap-2 items-stretch">
         {/* Text input */}
         <textarea
-          className="flex-1 resize-none rounded-xl border border-neutral-700 bg-neutral-900 p-3 outline-none focus:ring-2 focus:ring-blue-600"
+          className="text-base flex-1 resize-none rounded-xl border border-neutral-700 bg-neutral-900 p-3 outline-none focus:ring-2 focus:ring-blue-600"
           rows={2}
           value={input}
           onChange={(e) => setInput(e.target.value)}
